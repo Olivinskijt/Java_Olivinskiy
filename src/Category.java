@@ -1,14 +1,12 @@
 public class Category {
-    private int id; // Унікальний ідентифікатор категорії
-    private String name; // Назва категорії
+    private int id;
+    private String name;
 
-    // Конструктор класу
     public Category(int id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    // Геттери та сеттери
     public int getId() {
         return id;
     }

@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -15,6 +17,12 @@ public class Main {
         System.out.println(product2);
         System.out.println(product3);
 
+        List<Product> products = new ArrayList<>();
+
+        products.add(product1);
+        products.add(product2);
+        products.add(product3);
+
         Scanner scanner = new Scanner(System.in);
         // Оголошення товарів і категорій з попереднього коду
         Cart cart = new Cart();
@@ -25,6 +33,7 @@ public class Main {
             System.out.println("3 - Переглянути кошик");
             System.out.println("4 - Видалити товар з кошика");
             System.out.println("5 - Зробити замовлення");
+            System.out.println("6 - Пошук товарів");
             System.out.println("0 - Вийти");
             int choice = scanner.nextInt();
             switch (choice) {
@@ -78,6 +87,36 @@ public class Main {
                         System.out.println(order);
                         cart.clear(); // Метод для очищення кошика, який потрібно реалізувати в класі Cart
                     }
+                    break;
+                case 6:
+                    System.out.println("\nОберіть тип пошуку:");
+                    System.out.println("1 - За назвою");
+                    System.out.println("2 - За категорією");
+
+                    int searchChoice = scanner.nextInt();
+                    scanner.nextLine();
+
+                    System.out.println("Введіть пошуковий запит:");
+                    String query = scanner.nextLine();
+
+                    boolean found = false;
+
+                    for (Product product : products) {
+                        if (searchChoice == 1 &&
+                                product.getName().toLowerCase().contains(query.toLowerCase())) {
+                            System.out.println(product);
+                            found = true;
+                        } else if (searchChoice == 2 &&
+                                product.getCategory().getName().toLowerCase().contains(query.toLowerCase())) {
+                            System.out.println(product);
+                            found = true;
+                        }
+                    }
+
+                    if (!found) {
+                        System.out.println("Товарів за таким запитом не знайдено.");
+                    }
+
                     break;
                 case 0:
                     System.out.println("Дякуємо, що використовували наш магазин!");

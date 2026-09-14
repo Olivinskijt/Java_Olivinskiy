@@ -11,12 +11,16 @@ public class Product {
         this.name = name;
         this.price = price;
         this.description = description;
+        this.category = category;
     }
     public int getId() {
         return id;
     }
     public void setId(int id) {
         this.id = id;
+    }
+    public Category getCategory() {
+        return category;
     }
     public String getName() {
         return name;

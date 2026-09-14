@@ -23,7 +23,8 @@ public class Main {
             System.out.println("1 - Переглянути список товарів");
             System.out.println("2 - Додати товар до кошика");
             System.out.println("3 - Переглянути кошик");
-            System.out.println("4 - Зробити замовлення");
+            System.out.println("4 - Видалити товар з кошика");
+            System.out.println("5 - Зробити замовлення");
             System.out.println("0 - Вийти");
             int choice = scanner.nextInt();
             switch (choice) {
@@ -45,6 +46,30 @@ public class Main {
                     System.out.println(cart);
                     break;
                 case 4:
+                    if (cart.getProducts().isEmpty()) {
+                        System.out.println("Кошик порожній.");
+                    } else {
+                        System.out.println("Введіть ID товару для видалення з кошика:");
+                        int removeId = scanner.nextInt();
+
+                        Product productToRemove = null;
+
+                        for (Product product : cart.getProducts()) {
+                            if (product.getId() == removeId) {
+                                productToRemove = product;
+                                break;
+                            }
+                        }
+
+                        if (productToRemove != null) {
+                            cart.removeProduct(productToRemove);
+                            System.out.println("Товар успішно видалено з кошика.");
+                        } else {
+                            System.out.println("Товар з таким ID не знайдено в кошику.");
+                        }
+                    }
+                    break;
+                case 5:
                     if (cart.getProducts().isEmpty()) {
                         System.out.println("Кошик порожній. Додайте товари перед оформленням замовлення.");
                     } else {

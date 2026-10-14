@@ -1,15 +1,35 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import java.time.LocalDate;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        String filePath = "https://informer.com.ua/dut/java/pr2.csv";
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        TransactionCSVReader csvReader = new TransactionCSVReader();
+        List<Transaction> transactions = csvReader.readTransactions(filePath);
+
+        TransactionAnalyzer analyzer = new TransactionAnalyzer(transactions);
+        TransactionReportGenerator reportGenerator = new TransactionReportGenerator();
+
+        double totalBalance = analyzer.calculateTotalBalance();
+        reportGenerator.printBalanceReport(totalBalance);
+
+        String monthYear = "01-2024";
+        int transactionsCount = analyzer.countTransactionsByMonth(monthYear);
+        reportGenerator.printTransactionsCountByMonth(monthYear, transactionsCount);
+
+        List<Transaction> topExpenses = analyzer.findTopExpenses();
+        reportGenerator.printTopExpensesReport(topExpenses);
+
+        LocalDate start = LocalDate.of(2023, 12, 1);
+        LocalDate end = LocalDate.of(2024, 1, 31);
+        System.out.println("\n--- Аналіз за період (01.12.2023 - 31.01.2024) ---");
+        analyzer.findMaxExpenseInPeriod(start, end)
+                .ifPresent(t -> System.out.println("Найбільша витрата: " + t.getDescription() + " (" + t.getAmount() + ")"));
+        analyzer.findMinExpenseInPeriod(start, end)
+                .ifPresent(t -> System.out.println("Найменша витрата: " + t.getDescription() + " (" + t.getAmount() + ")"));
+
+        reportGenerator.printVisualCategoryReport(analyzer.calculateExpensesByCategory());
+        reportGenerator.printVisualMonthReport(analyzer.calculateExpensesByMonth());
     }
 }

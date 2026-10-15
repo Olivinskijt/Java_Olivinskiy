@@ -1,16 +1,14 @@
+import lombok.RequiredArgsConstructor;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 public class TransactionAnalyzer {
     private final List<Transaction> transactions;
-    private final DateTimeFormatter dateFormatter;
-
-    public TransactionAnalyzer(List<Transaction> transactions) {
-        this.transactions = transactions;
-        this.dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-    }
+    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
     public double calculateTotalBalance() {
         double balance = 0;
@@ -47,7 +45,7 @@ public class TransactionAnalyzer {
                     LocalDate d = LocalDate.parse(t.getDate(), dateFormatter);
                     return !d.isBefore(startDate) && !d.isAfter(endDate);
                 })
-                .min(Comparator.comparing(Transaction::getAmount)); // Найбільша за модулем витрата
+                .min(Comparator.comparing(Transaction::getAmount));
     }
 
     public Optional<Transaction> findMinExpenseInPeriod(LocalDate startDate, LocalDate endDate) {
@@ -57,7 +55,7 @@ public class TransactionAnalyzer {
                     LocalDate d = LocalDate.parse(t.getDate(), dateFormatter);
                     return !d.isBefore(startDate) && !d.isAfter(endDate);
                 })
-                .max(Comparator.comparing(Transaction::getAmount)); // Найменша за модулем витрата
+                .max(Comparator.comparing(Transaction::getAmount));
     }
 
     public Map<String, Double> calculateExpensesByCategory() {

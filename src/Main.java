@@ -85,7 +85,7 @@ public class Main {
                         Order order = new Order(cart);
                         System.out.println("Замовлення оформлено:");
                         System.out.println(order);
-                        cart.clear(); // Метод для очищення кошика, який потрібно реалізувати в класі Cart
+                        cart.clear();
                     }
                     break;
                 case 6:
